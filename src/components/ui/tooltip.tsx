@@ -14,7 +14,7 @@ export default function Tooltip({
 }) {
   return (
     <TooltipProvider>
-      <TooltipShadcn>
+      <TooltipShadcn delayDuration={10}>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
         <TooltipContent>{tooltipChildren}</TooltipContent>
       </TooltipShadcn>
