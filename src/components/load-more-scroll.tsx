@@ -8,8 +8,11 @@ import { Loader2 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import AnimeCard from "./anime-card";
+import { useSearchParams } from "next/navigation";
 
 export default function LoadMoreScroll() {
+  const searchParams = useSearchParams();
+  const genre = searchParams.get("genre");
   const [animes, setAnimes] = useState<Anime[]>([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -21,20 +24,23 @@ export default function LoadMoreScroll() {
     await delay(1000); // prevent rate limiting
     const nextPage = page + 1;
     const { data } = await getClient().query<AnimeList>(
-      AnimesQuery(nextPage),
+      AnimesQuery(nextPage, genre?.toString() ?? ""),
       {}
     );
     setAnimes((prev: Anime[]) => [...prev, ...(data?.Page.media ?? [])]);
     setPage(nextPage);
     setLoading(false);
-  }, [page]);
+  }, [page, genre]);
 
   useEffect(() => {
     if (inView) fetchNextData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView]);
 
-  console.log(animes);
+  useEffect(() => {
+    setAnimes([]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [genre]);
 
   return (
     <>

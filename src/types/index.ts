@@ -30,3 +30,7 @@ export type Pagination = {
   lastPage: number;
   hasNextPage: boolean;
 };
+
+export type GenreList = {
+  GenreCollection: string[];
+};

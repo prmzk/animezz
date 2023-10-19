@@ -1,34 +1,26 @@
-import { AnimeList } from "@/types";
-import Image from "next/image";
-import Link from "next/link";
-import AnimesQuery from "../queries/AnimesQuery";
-import { getClient } from "@/lib/urql-get-client";
-import LoadMoreScroll from "@/components/load-more-scroll";
-import { Frown, Meh, Smile } from "lucide-react";
 import AnimeCard from "@/components/anime-card";
+import GenreSelect from "@/components/genre-select";
+import LoadMoreScroll from "@/components/load-more-scroll";
 import { Separator } from "@/components/ui/separator";
-
-const getRatingColor = (score: number) => {
-  if (score >= 85) return "green";
-  if (score >= 70) return "orange";
-  return "red";
-};
-
-const getRatingEmoji = (score: number) => {
-  if (score >= 85) return <Smile color="green" size={20} />;
-  if (score >= 70) return <Meh color="orange" size={20} />;
-  return <Frown color="red" size={20} />;
-};
+import { getClient } from "@/lib/urql-get-client";
+import GenresQuery from "@/queries/GenresQuery";
+import { AnimeList, GenreList } from "@/types";
+import Image from "next/image";
+import AnimesQuery from "../queries/AnimesQuery";
 
 export default async function Home({
   searchParams,
 }: {
   searchParams: { [key: string]: string };
 }) {
-  const { data } = await getClient().query<AnimeList>(
-    AnimesQuery(searchParams.page || 1),
+  const { genre: genreParams } = searchParams;
+  const { data: animes } = await getClient().query<AnimeList>(
+    AnimesQuery(1, genreParams ?? ""),
     {}
   );
+
+  const { data: genres } = await getClient().query<GenreList>(GenresQuery, {});
+
   return (
     <div>
       <div className="flex gap-2 py-8 md:mb-20 mb-10">
@@ -51,8 +43,14 @@ export default async function Home({
         </div>
       </div>
       <Separator className="md:mb-20 mb-10" />
-      <div className="grid lg:grid-cols-2 grid-cols-1 gap-8">
-        {data?.Page.media.map((anime, i) => (
+      <div className="flex justify-end">
+        <GenreSelect
+          genres={genres?.GenreCollection ?? []}
+          searchParams={searchParams.genre}
+        />
+      </div>
+      <div className="grid lg:grid-cols-2 grid-cols-1 gap-8 mt-10">
+        {animes?.Page.media.map((anime, i) => (
           <AnimeCard anime={anime} key={i} />
         ))}
       </div>
