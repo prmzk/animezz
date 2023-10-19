@@ -34,3 +34,14 @@ export type Pagination = {
 export type GenreList = {
   GenreCollection: string[];
 };
+
+export type AnimeDetail = {
+  Media: Anime & {
+    title: {
+      romaji: string;
+      english: string;
+      userPreferred: string;
+    };
+    bannerImage: string;
+  };
+};

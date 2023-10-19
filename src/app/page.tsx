@@ -22,7 +22,7 @@ export default async function Home({
   const { data: genres } = await getClient().query<GenreList>(GenresQuery, {});
 
   return (
-    <div>
+    <div className="max-w-6xl mx-auto px-6">
       <div className="flex gap-2 py-8 md:mb-20 mb-10">
         <div className="flex flex-col justify-between w-full items-center lg:flex-row gap-10">
           <div className="flex flex-col gap-2 w-full">

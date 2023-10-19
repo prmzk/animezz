@@ -21,7 +21,7 @@ export default function Bookmarks() {
   };
 
   return (
-    <div>
+    <div className="max-w-6xl mx-auto px-6">
       <div className="flex gap-2 py-8 my-20">
         <h1 className="text-2xl font-bold text-center antialiased">
           Your Bookmarks
