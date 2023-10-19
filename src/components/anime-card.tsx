@@ -5,18 +5,7 @@ import Link from "next/link";
 import BookmarkButton from "./bookmark-btn";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
-
-const getRatingColor = (score: number) => {
-  if (score >= 85) return "green";
-  if (score >= 70) return "orange";
-  return "red";
-};
-
-const getRatingEmoji = (score: number) => {
-  if (score >= 85) return <Smile color="green" size={20} />;
-  if (score >= 70) return <Meh color="orange" size={20} />;
-  return <Frown color="red" size={20} />;
-};
+import { getRatingColor, getRatingEmoji } from "@/lib/utils";
 
 export default function AnimeCard({
   anime,

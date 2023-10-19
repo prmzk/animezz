@@ -1,24 +1,12 @@
 import BookmarkButton from "@/components/bookmark-btn";
 import { Separator } from "@/components/ui/separator";
 import { getClient } from "@/lib/urql-get-client";
+import { getRatingColor, getRatingEmoji } from "@/lib/utils";
 import AnimeDetailQuery from "@/queries/AnimeDetailQuery";
 import { Anime, AnimeDetail } from "@/types";
-import { Frown, Meh, Smile } from "lucide-react";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import Head from "next/head";
 import Image from "next/image";
-
-const getRatingColor = (score: number) => {
-  if (score >= 85) return "green";
-  if (score >= 70) return "orange";
-  return "red";
-};
-
-const getRatingEmoji = (score: number) => {
-  if (score >= 85) return <Smile color="green" size={20} />;
-  if (score >= 70) return <Meh color="orange" size={20} />;
-  return <Frown color="red" size={20} />;
-};
 
 export async function generateMetadata({
   params: { id },
