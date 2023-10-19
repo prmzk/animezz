@@ -40,9 +40,9 @@ export default function AnimeCard({
 
       <div className="p-4 h-full flex-grow flex flex-col">
         <div className="w-full flex items-center gap-4 h-12">
-          <h3 className="text-sm font-bold mb-2 line-clamp-2 mr-auto">
+          <h1 className="text-sm font-bold mb-2 line-clamp-2 mr-auto">
             {anime.title?.userPreferred}
-          </h3>
+          </h1>
           <div className="flex flex-col items-center">
             {getRatingEmoji(anime.averageScore)}
             <p

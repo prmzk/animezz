@@ -12,6 +12,21 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Animezz",
   description: "An anime bookmarker web app.",
+  generator: "Next.js",
+  manifest: "/manifest.json",
+  keywords: ["anime", "manga", "show", "bookmark"],
+  themeColor: [{ media: "(prefers-color-scheme: light)", color: "#fff" }],
+  authors: [
+    { name: "Adam Primarizki" },
+    {
+      name: "Adam Primarizki",
+      url: "https://www.linkedin.com/in/prmzk/",
+    },
+  ],
+  icons: [
+    { rel: "apple-touch-icon", url: "icons/icon-128x128.png" },
+    { rel: "icon", url: "icons/icon-128x128.png" },
+  ],
 };
 
 export default function RootLayout({
