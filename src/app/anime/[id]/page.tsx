@@ -4,6 +4,8 @@ import { getClient } from "@/lib/urql-get-client";
 import AnimeDetailQuery from "@/queries/AnimeDetailQuery";
 import { Anime, AnimeDetail } from "@/types";
 import { Frown, Meh, Smile } from "lucide-react";
+import { Metadata, ResolvingMetadata } from "next";
+import Head from "next/head";
 import Image from "next/image";
 
 const getRatingColor = (score: number) => {
@@ -18,6 +20,22 @@ const getRatingEmoji = (score: number) => {
   return <Frown color="red" size={20} />;
 };
 
+export async function generateMetadata({
+  params: { id },
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  // fetch data
+  const { data } = await getClient().query<AnimeDetail>(
+    AnimeDetailQuery(id),
+    {}
+  );
+
+  return {
+    title: data?.Media.title.userPreferred,
+    description: data?.Media.description,
+  };
+}
 export default async function AnimeDetail({
   params: { id },
 }: {
@@ -27,10 +45,12 @@ export default async function AnimeDetail({
     AnimeDetailQuery(id),
     {}
   );
-  console.log(data);
 
   return (
     <div className="pb-40">
+      <Head>
+        <title>{data?.Media.title?.userPreferred}</title>
+      </Head>
       <div className="w-full">
         <div className="w-full aspect-[19/4] relative">
           <Image src={data?.Media.bannerImage ?? ""} fill alt="banner" />
